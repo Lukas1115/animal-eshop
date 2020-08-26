@@ -1,6 +1,8 @@
 package com.litvaj.eshop.controller;
 
 import com.litvaj.eshop.model.Product;
+import com.litvaj.eshop.model.request.ProductDto;
+import com.litvaj.eshop.model.request.ProductsDto;
 import com.litvaj.eshop.service.ProductService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +31,19 @@ public class ProductController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation("get all products TODO")
+    @ApiOperation("get all products by attributes")
     public Page<Product> searchProducts(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Double min,
             @RequestParam(required = false) Double max,
             @PageableDefault Pageable pageable) {
         return productService.getProducts(name, min, max, pageable);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST)
+    @ApiOperation("creates products")
+    public void getProduct(@RequestBody ProductsDto productsDto) {
+        productService.createProducts(productsDto);
     }
 }

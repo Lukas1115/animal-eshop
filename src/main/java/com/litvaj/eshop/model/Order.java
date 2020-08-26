@@ -22,7 +22,7 @@ public class Order {
     private Double totalPrice;
 
     @Column
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<OrderedProduct> orderedProducts;
 
     @Column

@@ -2,6 +2,8 @@ package com.litvaj.eshop.service;
 
 import com.litvaj.eshop.exception.EntityNotFoundException;
 import com.litvaj.eshop.model.Product;
+import com.litvaj.eshop.model.request.ProductDto;
+import com.litvaj.eshop.model.request.ProductsDto;
 import com.litvaj.eshop.repository.ProductRepository;
 import com.litvaj.eshop.repository.specification.ProductSpecification;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +24,28 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+
     /**
-     * Save the product
+     * Map and Save the list of product dtos
+     *
+     * @param productsDtos to save
+     */
+    public void createProducts(ProductsDto productsDtos) {
+        for (ProductDto productDto : productsDtos.getProducts()) {
+            Product product = new Product();
+
+            product.setName(productDto.getName());
+            product.setAnimalCategory(productDto.getAnimalCategory());
+            product.setPrice(productDto.getPrice());
+            product.setDescription(productDto.getDescription());
+            product.setImagesUrls(productDto.getImagesUrls());
+
+            createProduct(product);
+        }
+    }
+
+    /**
+     * Save the product entity
      *
      * @param product to save
      * @return saved Product with ID
